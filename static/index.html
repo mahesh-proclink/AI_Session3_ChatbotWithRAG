@@ -209,11 +209,11 @@
        MAIN CONTENT: Upload + Chat
        =============================== -->
   <div class="main-content">
-    <!-- Upload PDFs section -->
+    <!-- Upload section with support for PDF, TXT, DOCX, XLSX -->
     <div class="upload-section">
-      <h2>Upload PDF Files</h2>
+      <h2>Upload Documents</h2>
       <form id="upload-form">
-        <input type="file" id="pdf-files" accept=".pdf" multiple required />
+        <input type="file" id="pdf-files" accept=".pdf,.txt,.docx,.xlsx" multiple required />
         <button type="submit">Upload and Process</button>
       </form>
       <div id="upload-status"></div>
@@ -224,7 +224,7 @@
       <!-- Chat messages appear here -->
       <div class="chat-messages" id="chat-messages">
         <div class="message assistant-message">
-          Welcome! Please upload PDF files to start chatting.
+          Welcome! Please upload PDF, TXT, DOCX, or XLSX files to start chatting.
         </div>
       </div>
 
@@ -440,7 +440,7 @@
       if (sessionId === currentSessionId) {
         currentSessionId = null;
         chatMessages.innerHTML =
-          '<div class="message assistant-message">Welcome! Please upload PDF files to start chatting.</div>';
+          '<div class="message assistant-message">Welcome! Please upload PDF, TXT, DOCX, or XLSX files to start chatting.</div>';
         messageInput.disabled = true;
         sendBtn.disabled = true;
       }
@@ -457,7 +457,7 @@
     currentSessionId = null;
     pdfFilesInput.value = "";
     chatMessages.innerHTML =
-      '<div class="message assistant-message">Welcome! Please upload PDF files to start chatting.</div>';
+      '<div class="message assistant-message">Welcome! Please upload PDF, TXT, DOCX, or XLSX files to start chatting.</div>';
     messageInput.disabled = true;
     sendBtn.disabled = true;
     document.querySelectorAll(".session-item").forEach((item) =>

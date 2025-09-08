@@ -8,3 +8,7 @@ llama-index
 llama-index-embeddings-gemini
 google-genai
 google-generativeai==0.7.2
+pydantic
+python-docx
+openpyxl
+docx2txt

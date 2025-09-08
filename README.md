@@ -1,11 +1,11 @@
 # PDF Chatbot with RAG
 
-This project is a **Retrieval-Augmented Generation (RAG)** chatbot that allows you to upload PDF files and interact with them using natural language queries. It uses **FastAPI** for the backend, **FAISS** for vector storage, and **Google Gemini (via LlamaIndex)** for embeddings and LLM responses.
+This project is a **Retrieval-Augmented Generation (RAG)** chatbot that allows users to upload documents (.pdf, .txt, .docx, .xlsx) files and interact with them using natural language queries. It uses **FastAPI** for the backend, **FAISS** for vector storage, and **Google Gemini (via LlamaIndex)** for embeddings and LLM responses.
 
 ---
 
 ## 🚀 Features
-- Upload multiple PDF files per session
+- Upload and process PDF, TXT, DOCX, and XLSX files
 - Store and retrieve sessions
 - Chat with context-aware responses from documents
 - Delete old sessions (including uploaded files and vector stores)
@@ -54,6 +54,10 @@ pydantic
 google-generativeai
 llama-index
 python-dotenv
+pydantic
+python-docx
+openpyxl
+docx2txt
 ```
 Then install:
 ```bash
@@ -97,6 +101,8 @@ The server will start at [http://localhost:8000](http://localhost:8000).
 - This implementation uses **in-memory + JSON file storage** for sessions. For production, replace with a proper database.
 - CORS is set to allow all origins (`*`). Restrict this in production.
 - The assistant persona is named **Alexa** in the system prompt.
+- Ensure you have LibreOffice or `docx2txt` for `.docx` parsing and `openpyxl` for `.xlsx` support.
+- This project is for demonstration purposes and should be hardened for production use.
 
 ---
 

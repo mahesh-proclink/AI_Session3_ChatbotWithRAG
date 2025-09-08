@@ -97,8 +97,8 @@ vector_indexes = {} # Maps session_id -> vector index
 @app.post("/upload")
 async def upload_pdfs(files: List[UploadFile] = File(...), session_id: Optional[str] = Form(None)):
     """
-    Upload one or more PDF files, create a session (if not provided),
-    build a FAISS vector index, and initialize a chat engine for that session.
+    Upload documents (PDF, TXT, DOCX, XLSX), create or update session,
+    build FAISS vector index, and initialize chat engine for that session.
     """
     try:
         if not files:
@@ -111,15 +111,21 @@ async def upload_pdfs(files: List[UploadFile] = File(...), session_id: Optional[
         # Save files to session-specific directory
         session_dir = f"uploads/{session_id}"
         os.makedirs(session_dir, exist_ok=True)
+        
+        allowed_extensions = [".pdf", ".txt", ".docx", ".xlsx"]
+        
+        # Save uploaded files
         for file in files:
-            if not file.filename.lower().endswith('.pdf'):
-                raise HTTPException(status_code=400, detail="Only PDF files are allowed")
+            ext = os.path.splitext(file.filename.lower())[1]
+            if ext not in allowed_extensions:
+                raise HTTPException(status_code=400, detail=f"File type {ext} not supported")
+            
             file_path = os.path.join(session_dir, file.filename)
             with open(file_path, "wb") as f:
                 content = await file.read()
                 f.write(content)
 
-        # Load documents into memory
+        # Load all documents from session folder
         documents = SimpleDirectoryReader(session_dir).load_data()
 
         # Create FAISS vector store
